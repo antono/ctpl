@@ -73,9 +73,9 @@ Ctpl_1.0.gir: $(lib_LTLIBRARIES)
 Ctpl_1_0_gir_FILES = $(introspection_sources)
 Ctpl_1_0_gir_LIBS = $(lib_LTLIBRARIES)
 Ctpl_1_0_gir_INCLUDES = GLib-2.0
-Ctpl_1_0__gir_EXPORT_PACKAGES = ctpl
+Ctpl_1_0_gir_EXPORT_PACKAGES = ctpl
 Ctpl_1_0_gir_CFLAGS = $(INCLUDES) -DCTPL_COMPILATION
-Ctpl_1_0_gir_SCANNERFLAGS = --identifier-prefix=ctpl
+Ctpl_1_0_gir_SCANNERFLAGS = --identifier-prefix=ctpl --c-include "ctpl/ctpl.h" --warn-all
 INTROSPECTION_GIRS += Ctpl-1.0.gir
 
 girdir = $(datadir)/gir-1.0
