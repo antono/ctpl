@@ -55,3 +55,35 @@ test_CFLAGS   = $(libctpl_la_CFLAGS)
 test_LDADD    = $(libctpl_la_LIBADD)
 test_SOURCES  = test.c \
                 $(libctpl_la_SOURCES)
+
+CLEANFILES    =
+
+# Gobject introspection support
+-include $(INTROSPECTION_MAKEFILE)
+
+INTROSPECTION_GIRS =
+INTROSPECTION_SCANNER_ARGS = --add-include-path=$(srcdir)
+INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
+
+if HAVE_INTROSPECTION
+
+introspection_sources = $(libctpl_la_SOURCES) $(ctplinclude_HEADERS)
+
+Ctpl_1.0.gir: $(lib_LTLIBRARIES)
+Ctpl_1_0_gir_FILES = $(introspection_sources)
+Ctpl_1_0_gir_LIBS = $(lib_LTLIBRARIES)
+Ctpl_1_0_gir_INCLUDES = GLib-2.0
+Ctpl_1_0_gir_PACKAGES = glib-2.0
+Ctpl_1_0_gir_CFLAGS = $(INCLUDES) -DCTPL_COMPILATION
+Ctpl_1_0_gir_SCANNERFLAGS = --identifier-prefix=ctpl
+INTROSPECTION_GIRS += Ctpl-1.0.gir
+
+girdir = $(datadir)/gir-1.0
+gir_DATA = $(INTROSPECTION_GIRS)
+
+typelibdir = $(libdir)/girepository-1.0
+typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
+
+CLEANFILES += $(gir_DATA) $(typelib_DATA)
+
+endif
